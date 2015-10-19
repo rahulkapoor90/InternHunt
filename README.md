@@ -29,3 +29,4 @@ Things To Do
 
 - Ability to create accounts.
 - Shift to Angular.
+- Have a favicon.
