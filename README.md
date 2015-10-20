@@ -16,17 +16,3 @@ Contributing
 Contributions are highly welcomed! This repository is for InternHunter's like you so if you see any issue on the Web App then open an issue and if you think you can fix it then start working on it.
 
 Fork the project ([Need help with forking a project?](https://help.github.com/articles/fork-a-repo/)). You'll do all of your work on your forked copy. Once your code is ready, submit a pull request and i'll do a quick code review and iterate from there.
-
-Languages Used
---------------
-Currently, InternHunt is built upon these languages but i would be using Angular, Node.js, etc in coming updates.
-
-- PHP, CSS, Javascript
-- HTML and Bootstrap.
-
-Things To Do
-------------
-
-- Ability to create accounts.
-- Shift to Angular.
-- Have a favicon.
