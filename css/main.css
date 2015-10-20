@@ -184,3 +184,18 @@ div.favicon {
   border-left-color: #d9534f; /* Left side border color */
   background-color: rgba(217, 83, 79, 0.1); /*Same color as the left border with reduced alpha to 0.1*/
 }
+.notice::after {
+    clear: both;
+    content: "";
+    display: table;
+}
+.notice.v-colorset-blue {
+    background-color: #44b6f1;
+}
+.notice {
+    line-height: 20px;
+    margin: 20px 0 10px;
+    min-height: 36px;
+    padding: 24px 54px 24px 20px;
+    position: relative;
+}

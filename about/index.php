@@ -94,33 +94,35 @@ code {
 </style>
 <body>
 <div class="container">
-<h2>Know About InternHunt</h2>
+<h1>Know About InternHunt</h1>
 <p>Human curated internships</p>
-<h2>about </h2>
+<h2>About</h2>
 <p>
-Reinventing Internships In India One Last Time.
-</p>
-<p>How many times have you searched for internships online and found only those startups looking to get 
-their work done.</p><br>
-<strong>The chances are very high in such case!</strong><br>
-<p>So, I thought of curating all the best internships one could find in India and make them available in one
-place to help budding interns.</p><br>
-<p>This is how InternHunt was born.<p>
-<h2>contact</h2>
-<p>Email me - promote [at] internshipsinsf [dot] com</p>
-<p> </p>
+InternHunt is a weekend project that pretty much focuses on gathering Internships in India<br>
+that could help students to learn more in their fields of interest rather than making students to take those<br>
+Startup internships that just want to get their work done easily by employing such free resources.
+<br>There are number of other reasons why InternHunt exists but let's just move on and,<br>
+<br><strong>Find and apply to those worthy Internships.</strong>
+</p><br>
+<i class='fa fa-inr fa-2x icon-green'></i> - Paid Internship.<br><br>
+<i class='fa fa-inr fa-2x icon-grey'></i> - Unpaid Internship.
+<h3>Made By :</h3>
+<br>
+<p> GitHub : <a target="_blank" href="www.github.com/rahulkapoor90">www.github.com/rahulkapoor90</a></p><br>
+<p> Personal Website : <a target="_blank" href="www.rahulkapoor.me">www.rahulkapoor.me</a></p><br>
+
+
 </div>
 <footer class="footer">
 <div class="container-footer">
 <p class="text-muted">
 © 2015 Internhunt.in -
-<a href="./privacy">Privacy Policy</a>
 -
 <a href="./terms">Terms and Conditions</a>
 -
-<a target="_top" href="mailto:promote@internshipsinsf.com?Subject=Promoted Job">promote an internship</a>
+<a target="_top" href="mailto:rahulkapoorbbps@outlook.com?Subject=Promoted Job">promote an internship</a>
 -
-<a href="http://facebook.com/internhunt">Fan Page</a>
+<a target="_blank" href="https://www.facebook.com/pages/Intern-Hunt/1022256721128835">Fan Page</a>
 </p>
 </div>
 </footer>

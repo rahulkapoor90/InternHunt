@@ -18,6 +18,8 @@ use Carbon\Carbon;
 <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 <link href="./css/main.css" rel="stylesheet">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/
+libs/jquery/1.3.0/jquery.min.js"></script>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -28,6 +30,56 @@ use Carbon\Carbon;
   ga('send', 'pageview');
 
 </script>
+<style type="text/css">
+.notice::after {
+    clear: both;
+    content: "";
+    display: table;
+}
+.notice.v-colorset-blue {
+    background-color: #44b6f1;
+}
+.notice {
+    line-height: 20px;
+    margin: 20px 0 10px;
+    min-height: 36px;
+    padding: 24px 54px 24px 20px;
+    position: relative;
+}
+.notice--container {
+    padding: 0 44px 0 20px;
+}
+.ama-event-detail--header--heading {
+    box-sizing: border-box;
+    margin: 0 auto;
+    max-width: 960px;
+    min-width: 350px;
+    padding: 0 10px;
+    position: relative;
+}
+.notice.v-colorset-blue .notice--text {
+    color: #f2f2f2;
+}
+.notice--text {
+    display: block;
+    float: left;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 6px;
+    text-align: left;
+}
+b, strong {
+    font-weight: bold;
+}
+.btn-no-shadow {
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+}
+.btn-primary-ghost {
+    background: transparent none repeat scroll 0 0;
+    color: #215f1e;
+    transition: background 0.2s ease-in-out 0s, border 0.2s ease-in-out 0s;
+}
+</style>
 </head>
 <body>
 <?php
@@ -129,39 +181,224 @@ else{
 </tr>
 </thead>
 <tbody>
-<tr class="promoted">
-<td>
-<p class="promoted-text">
-<i class="fa fa-bullhorn fa-1x"></i>
+<?php
+if (isset($_GET['place'])) {
+	$place = mysqli_real_escape_string($conn, $_GET['place']);
+	if(preg_match("/^[a-zA-Z ]+$/", $place))  {
+ 	//check company exists
+	$check = mysqli_query($conn, "SELECT * FROM data WHERE place='$place' ORDER BY id DESC");
+	if (mysqli_num_rows($check)>=1) {
+	while($get = mysqli_fetch_assoc($check)){
+	$id = $get['id'];
+	$title = $get['title'];	
+	$company = $get['company'];
+	$category = $get['category'];
+	$place = $get['place']; 
+	$semester = $get['semester'];  
+	$paid = $get['paid'];  
+	$url = $get['url']; 
+	$featured = $get['Featured'];
+	$upvote = $get['upvote'];
+	if($featured == "yes" || $featured == "YES" || $featured == "Yes"){
+							$echo_featured = "class='promoted'";
+							$feat = "<p class='promoted-text'>
+<i class='fa fa-bullhorn fa-1x'></i>
 Featured Internship
-</p>
-<p>Marketing Events</p>
+</p>";
+						}
+						else {
+							$echo_featured = "";
+							$feat = "";
+						}
+						if($paid == "yes" || $paid == "YES" || $paid == "Yes"){
+							$echo_paid = "<i class='fa fa-inr fa-2x icon-green'></i>";
+						}
+						else {
+							$echo_paid ="<i class='fa fa-inr fa-2x icon-grey'></i>";
+						}
+	 echo "
+<tr $echo_featured>
+<td>
+$feat
+<p>$title</p>
 <p>
 <small>
-<a href="index.php?company=10">Snapdeal</a>
+<a href='index.php?company=$company'>$company</a>
 </small>
 </p>
+<p>
+<a class='btn btn-no-shadow btn-primary btn-xs btn-primary-ghost vote' id='$id' name='up' href=''>Upvote</a>
+$upvote Points
+</p>
 </td>
-<td style="text-align:center; vertical-align: middle;">
-<a href="index.php?category=11">Marketing</a>
+<td style='text-align:center; vertical-align: middle;'>
+<a href='index.php?category=$category'>$category</a>
 </td>
-<td style="text-align:center; vertical-align: middle;">
-<a href="index.php?category=11">Delhi</a>
+<td style='text-align:center; vertical-align: middle;'>
+<a href='index.php?place=$place'>$place</a>
 </td>
-<td style="text-align:center; vertical-align: middle;">
-<a href="index.php?semester=fall">fall</a>
+<td style='text-align:center; vertical-align: middle;'>
+<a href='index.php?semester=$semester'>$semester</a>
 </td>
-<td data-value="1" style="text-align:center; vertical-align: middle; ">
-<i class="fa fa-inr fa-2x icon-green"></i>
+<td data-value='0' style='text-align:center; vertical-align: middle;'>
+$echo_paid
 </td>
-<td style="text-align:right; vertical-align: middle;">
-<a target="blank" href="l/index.php?id=33">
-<i class="fa fa-rocket fa-2x icon-orange"></i>
+<td style='text-align:right; vertical-align: middle;'>
+<a target='blank' rel='nofollow' href='$url?ref=internhunt'>
+<i class='fa fa-rocket fa-2x icon-orange'></i>
 </a>
 </td>
 </tr>
-<?php
-//If the user is logged in
+	 ";
+	}
+	}
+	}
+}
+else if (isset($_GET['category'])) {
+	$category = mysqli_real_escape_string($conn, $_GET['category']);
+	if (ctype_alnum($category)) {
+ 	//check company exists
+	$check = mysqli_query($conn, "SELECT * FROM data WHERE category='$category' ORDER BY id DESC");
+	if (mysqli_num_rows($check)>=1) {
+	while($get = mysqli_fetch_assoc($check)){
+	$id = $get['id'];
+	$title = $get['title'];	
+	$company = $get['company'];
+	$category = $get['category'];
+	$place = $get['place']; 
+	$semester = $get['semester'];  
+	$paid = $get['paid'];  
+	$url = $get['url']; 
+	$featured = $get['Featured'];
+	$upvote = $get['upvote'];
+	if($featured == "yes" || $featured == "YES" || $featured == "Yes"){
+							$echo_featured = "class='promoted'";
+							$feat = "<p class='promoted-text'>
+<i class='fa fa-bullhorn fa-1x'></i>
+Featured Internship
+</p>";
+						}
+						else {
+							$echo_featured = "";
+							$feat = "";
+						}
+						if($paid == "yes" || $paid == "YES" || $paid == "Yes"){
+							$echo_paid = "<i class='fa fa-inr fa-2x icon-green'></i>";
+						}
+						else {
+							$echo_paid ="<i class='fa fa-inr fa-2x icon-grey'></i>";
+						}
+	 echo "
+<tr $echo_featured>
+<td>
+$feat
+<p>$title</p>
+<p>
+<small>
+<a href='index.php?company=$company'>$company</a>
+</small>
+</p>
+<p>
+<a class='btn btn-no-shadow btn-primary btn-xs btn-primary-ghost vote' id='$id' name='up' href=''>Upvote</a>
+$upvote Points
+</p>
+</td>
+<td style='text-align:center; vertical-align: middle;'>
+<a href='index.php?category=$category'>$category</a>
+</td>
+<td style='text-align:center; vertical-align: middle;'>
+<a href='index.php?place=$place'>$place</a>
+</td>
+<td style='text-align:center; vertical-align: middle;'>
+<a href='index.php?semester=$semester'>$semester</a>
+</td>
+<td data-value='0' style='text-align:center; vertical-align: middle;'>
+$echo_paid
+</td>
+<td style='text-align:right; vertical-align: middle;'>
+<a target='blank' rel='nofollow' href='$url?ref=internhunt'>
+<i class='fa fa-rocket fa-2x icon-orange'></i>
+</a>
+</td>
+</tr>
+	 ";
+	}
+	}
+	}
+}
+else if (isset($_GET['company'])) {
+	$company = mysqli_real_escape_string($conn, $_GET['company']);
+	if (ctype_alnum($company)) {
+ 	//check company exists
+	$check = mysqli_query($conn, "SELECT * FROM data WHERE company='$company' ORDER BY id DESC");
+	if (mysqli_num_rows($check)>=1) {
+	while($get = mysqli_fetch_assoc($check)){
+	$id = $get['id'];
+	$title = $get['title'];	
+	$company = $get['company'];
+	$category = $get['category'];
+	$place = $get['place']; 
+	$semester = $get['semester'];  
+	$paid = $get['paid'];  
+	$url = $get['url']; 
+	$featured = $get['Featured'];
+	$upvote = $get['upvote'];
+	if($featured == "yes" || $featured == "YES" || $featured == "Yes"){
+							$echo_featured = "class='promoted'";
+							$feat = "<p class='promoted-text'>
+<i class='fa fa-bullhorn fa-1x'></i>
+Featured Internship
+</p>";
+						}
+						else {
+							$echo_featured = "";
+							$feat = "";
+						}
+						if($paid == "yes" || $paid == "YES" || $paid == "Yes"){
+							$echo_paid = "<i class='fa fa-inr fa-2x icon-green'></i>";
+						}
+						else {
+							$echo_paid ="<i class='fa fa-inr fa-2x icon-grey'></i>";
+						}
+	 echo "
+<tr $echo_featured>
+<td>
+$feat
+<p>$title</p>
+<p>
+<small>
+<a href='index.php?company=$company'>$company</a>
+</small>
+</p>
+<p>
+<a class='btn btn-no-shadow btn-primary btn-xs btn-primary-ghost vote' id='$id' name='up' href=''>Upvote</a>
+$upvote Points
+</p>
+</td>
+<td style='text-align:center; vertical-align: middle;'>
+<a href='index.php?category=$category'>$category</a>
+</td>
+<td style='text-align:center; vertical-align: middle;'>
+<a href='index.php?place=$place'>$place</a>
+</td>
+<td style='text-align:center; vertical-align: middle;'>
+<a href='index.php?semester=$semester'>$semester</a>
+</td>
+<td data-value='0' style='text-align:center; vertical-align: middle;'>
+$echo_paid
+</td>
+<td style='text-align:right; vertical-align: middle;'>
+<a target='blank' rel='nofollow' href='$url?ref=internhunt'>
+<i class='fa fa-rocket fa-2x icon-orange'></i>
+</a>
+</td>
+</tr>
+	 ";
+	}
+	}
+	}
+}
+else {
 $getposts = mysqli_query($conn,"SELECT * FROM data ORDER BY id DESC") or die(mysql_error());
 $posts = mysqli_num_rows($getposts);
 if($posts == 0){
@@ -176,36 +413,55 @@ while ($row = mysqli_fetch_array($getposts,MYSQLI_ASSOC)) {
 						$place = $row['place']; 
 						$semester = $row['semester'];  
 						$paid = $row['paid'];  
-						if($paid == "yes"){
+						$url = $row['url']; 
+						$featured = $row['Featured'];
+						$upvote = $row['upvote'];
+						
+						if($featured == "yes" || $featured == "YES" || $featured == "Yes"){
+							$echo_featured = "class='promoted'";
+							$feat = "<p class='promoted-text'>
+<i class='fa fa-bullhorn fa-1x'></i>
+Featured Internship
+</p>";
+						}
+						else {
+							$echo_featured = "";
+							$feat = "";
+						}
+						if($paid == "yes" || $paid == "YES" || $paid == "Yes"){
 							$echo_paid = "<i class='fa fa-inr fa-2x icon-green'></i>";
 						}
 						else {
 							$echo_paid ="<i class='fa fa-inr fa-2x icon-grey'></i>";
 						}
 	 echo "
-<tr>
+<tr $echo_featured>
 <td>
+$feat
 <p>$title</p>
 <p>
 <small>
-<a href='index.php?company=86'>$company</a>
-</small>
+<a href='index.php?company=$company'>$company</a>
+</small></p>
+<p>
+<a class='btn btn-no-shadow btn-primary btn-xs btn-primary-ghost vote' id='$id' name='up' href=''>Upvote</a>
+$upvote Points
 </p>
 </td>
 <td style='text-align:center; vertical-align: middle;'>
-<a href='index.php?category=1'>$category</a>
+<a href='index.php?category=$category'>$category</a>
 </td>
 <td style='text-align:center; vertical-align: middle;'>
-<a href='index.php?category=11'>$place</a>
+<a href='index.php?place=$place'>$place</a>
 </td>
 <td style='text-align:center; vertical-align: middle;'>
-<a href='index.php?semester=fall'>$semester</a>
+<a href='index.php?semester=$semester'>$semester</a>
 </td>
 <td data-value='0' style='text-align:center; vertical-align: middle;'>
 $echo_paid
 </td>
 <td style='text-align:right; vertical-align: middle;'>
-<a target='blank' rel='nofollow' href='./apply/marketingevents'>
+<a target='blank' rel='nofollow' href='$url?ref=internhunt'>
 <i class='fa fa-rocket fa-2x icon-orange'></i>
 </a>
 </td>
@@ -213,9 +469,12 @@ $echo_paid
 	 ";
 	 }
 }
+}
 ?>
+
 </tbody>
 </table>
+
 <table class="tabletwo">
 <div id="sidebar">
 <div class="module community-bulletin" data-tracker="cb=1">
@@ -247,15 +506,42 @@ $echo_paid
 </div>
 </table>
 </div>
+<script type="text/javascript">
+$(function() {
+$(".vote").click(function()
+{
+var id = $(this).attr("id");
+var name = $(this).attr("name");
+var dataString = 'id='+ id ;
+var parent = $(this);
+
+if (name=='up')
+{
+$.ajax({
+type: "POST",
+url: "up_vote.php",
+data: dataString,
+cache: false,
+
+success: function(html)
+{
+parent.html(html);
+}
+});
+}
+return false;
+});
+});
+</script>
 <footer class="footer">
 <div class="container-footer">
 <p class="text-muted">
 © 2015 Internhunt.in -
 <a href="./terms">Terms and Conditions</a>
 -
-<a target="_top" href="mailto:rahulkapoorbbps@outlook.com?Subject=Promoted Job">promote an internship</a>
+<a target="_top" href="mailto:rahulkapoorbbps@outlook.com?Subject=Promoted Job">Promote an Internship</a>
 -
-<a href="https://www.facebook.com/pages/Intern-Hunt/1022256721128835">Fan Page</a>
+<a target="_blank" href="https://www.facebook.com/pages/Intern-Hunt/1022256721128835">Fan Page</a>
 </p>
 </div>
 </footer>
