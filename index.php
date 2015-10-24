@@ -399,7 +399,7 @@ $echo_paid
 	}
 }
 else {
-$getposts = mysqli_query($conn,"SELECT * FROM data ORDER BY id DESC") or die(mysql_error());
+$getposts = mysqli_query($conn,"SELECT * FROM data ORDER BY upvote DESC") or die(mysql_error());
 $posts = mysqli_num_rows($getposts);
 if($posts == 0){
 	echo " No posts are there bro!";
