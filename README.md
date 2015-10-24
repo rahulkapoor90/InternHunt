@@ -9,13 +9,10 @@ InternHunt is your one-stop destination to help you get meaningful and worthy in
 
 The code here is running live at [InternHunt](http://www.internhunt.in). 
 
-Screenshots
+Screenshot
 -----------
 
 ![](http://i.imgur.com/xkID2Uk.png)
-
-![] (http://i.imgur.com/yob0LLQ.png)
-
 
 Contributing
 ------------
